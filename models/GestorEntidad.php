@@ -8,23 +8,51 @@
             }
         }
 
-        public function crearCriatura(){
-
+        public function crearCriatura($criatura){
+            $_SESSION['criaturas'][] = $criatura;
         }
 
         public function leerCriatura(){
+            return $_SESSION['criaturas'];
+        }
+
+        public function buscarCriatura($id){
+            foreach($_SESSION['criaturas'] as $criatura){
+                if ($criatura->getId() == $id) {
+                    return $criatura;
+                }
+            }
+
+            return null;
 
         }
 
-        public function buscarCriatura(){
+        public function editarCriatura($id, $nombre, $especie, $peligrosidad, $salud){
+            $criatura = $this->buscarCriatura($id);
 
+            if ($criatura !== null) {
+                $criatura->setNombre($nombre);
+                $criatura->setEspecie($especie);
+                $criatura->setPeligrosidad($peligrosidad);
+                $criatura->setSalud($salud);
+                return true;
+            }
+
+            return false;
         }
 
-        public function editarCriatura(){
+        public function eliminarCriatura($id){
 
-        }
+            foreach ($_SESSION['criaturas'] as $i => $criatura) {
+                if ($criatura->getId() == $id) {
+                    unset($_SESSION['criaturas'][$i]);
+                    $_SESSION['criaturas'] = array_values($_SESSION['criaturas']);
 
-        public function eliminarCriatura(){
+                    return true;
+                }
+            }
+
+            return false;
             
         }
     }
