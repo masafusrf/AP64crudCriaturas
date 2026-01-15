@@ -27,12 +27,10 @@
 
         }
 
-        public function editarCriatura($id, $nombre, $especie, $peligrosidad, $salud){
+        public function editarCriatura($id, $peligrosidad, $salud){
             $criatura = $this->buscarCriatura($id);
 
             if ($criatura !== null) {
-                $criatura->setNombre($nombre);
-                $criatura->setEspecie($especie);
                 $criatura->setPeligrosidad($peligrosidad);
                 $criatura->setSalud($salud);
                 return true;
