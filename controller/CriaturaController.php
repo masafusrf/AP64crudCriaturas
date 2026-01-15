@@ -37,7 +37,7 @@
 
                 } elseif ($tipo === 'terrestre') {
                     
-                    $terreno = $_POST['terrestre'];
+                    $terreno = $_POST['terreno'];
 
                     $criatura = new CriaturaTerrestre(
                         $id,
@@ -47,11 +47,25 @@
                         $salud,
                         $terreno
                     );
+                
+                }elseif ($tipo === 'voladora') {
+
+                    $envergadura = $_POST['envergadura'];
+
+                    $criatura = new CriaturaVoladora(
+                        $id,
+                        $nombre,
+                        $especie,
+                        $peligrosidad,
+                        $salud,
+                        $envergadura
+                    );
+
                 }else{
                     echo "Tipo no válido";
                     return;
                 }
-
+                
                 $this->gestor->crearCriatura($criatura);
 
                 header("Location: index.php");
@@ -65,8 +79,10 @@
             $id = $_GET['id'] ?? null;
             $criatura = $this->gestor->buscarCriatura($id);
 
+            
             if(!$criatura){
                 echo "Esta criatura no existe";
+                exit;
             }
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
