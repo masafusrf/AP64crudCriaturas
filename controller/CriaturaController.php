@@ -20,8 +20,38 @@
                 $especie = $_POST['especie'];
                 $peligrosidad = $_POST['peligrosidad'];
                 $salud = $_POST['salud'];
+                $tipo = $_POST['tipo'];
 
-                $criatura = new Criatura($id, $nombre, $especie, $peligrosidad, $salud);
+                if ($tipo === 'marina') {
+
+                    $profundidad = $_POST['profundidad'];
+
+                    $criatura = new CriaturaMarina(
+                        $id,
+                        $nombre,
+                        $especie,
+                        $peligrosidad,
+                        $salud,
+                        $profundidad
+                    );
+
+                } elseif ($tipo === 'terrestre') {
+                    
+                    $terreno = $_POST['terrestre'];
+
+                    $criatura = new CriaturaTerrestre(
+                        $id,
+                        $nombre,
+                        $especie,
+                        $peligrosidad,
+                        $salud,
+                        $terreno
+                    );
+                }else{
+                    echo "Tipo no válido";
+                    return;
+                }
+
                 $this->gestor->crearCriatura($criatura);
 
                 header("Location: index.php");
@@ -40,7 +70,7 @@
             }
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $this->gestor->editarCriatura($id, $_POST['nombre'], $_POST['especie'], $_POST['peligrosidad'], $_POST['salud']);
+                $this->gestor->editarCriatura($id, $_POST['peligrosidad'], $_POST['salud']);
 
                 header("Location: index.php");
                 exit;
